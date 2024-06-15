@@ -1,14 +1,17 @@
 from django.db import models
-from accounts.models import *
+from django.contrib.auth import get_user_model
 # Create your models here.
 
+#get-user-model
+User = get_user_model()
+
 class Post(models.Model):
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    image = models.ImageField(null=True,blank=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.BooleanField()
     category = models.ForeignKey('Category',on_delete=models.SET_NULL,null=True)
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
-    image = models.ImageField(null=True,blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField()
